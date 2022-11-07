@@ -1,0 +1,21 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	//
+KonsoliIO	src/konsoli_io.py	/^class KonsoliIO:$/;"	c
+Laskin	src/laskin.py	/^class Laskin:$/;"	c
+StubIO	src/tests/laskin_test.py	/^class StubIO:$/;"	c
+TestLaskin	src/tests/laskin_test.py	/^class TestLaskin(unittest.TestCase):$/;"	c
+__init__	src/laskin.py	/^    def __init__(self, io):$/;"	m	class:Laskin
+__init__	src/tests/laskin_test.py	/^    def __init__(self, inputs):$/;"	m	class:StubIO
+_laske_summa	src/laskin.py	/^    def _laske_summa(self, luku1, luku2):$/;"	m	class:Laskin
+kirjoita	src/konsoli_io.py	/^    def kirjoita(self, teksti):$/;"	m	class:KonsoliIO
+kirjoita	src/tests/laskin_test.py	/^    def kirjoita(self, teksti):$/;"	m	class:StubIO
+lue	src/konsoli_io.py	/^    def lue(self, teksti):$/;"	m	class:KonsoliIO
+lue	src/tests/laskin_test.py	/^    def lue(self, teksti):$/;"	m	class:StubIO
+main	src/index.py	/^def main():$/;"	f
+suorita	src/laskin.py	/^    def suorita(self):$/;"	m	class:Laskin
+test_yksi_summa_oikein	src/tests/laskin_test.py	/^    def test_yksi_summa_oikein(self):$/;"	m	class:TestLaskin
