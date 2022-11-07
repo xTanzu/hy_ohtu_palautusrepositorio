@@ -1,5 +1,5 @@
 import unittest
-# from player_reader_stub import PlayerReaderStub
+from enums.sort_by import SortBy
 from player import Player
 from statistics import Statistics
 
@@ -43,4 +43,25 @@ class TestStatistics(unittest.TestCase):
         top_players = self.statistics.top(4)
         for i in range(5):
             self.assertEqual(top_players[i].name, correct_top_player_names[i])
+
+    def test_top_sort_by_points(self):
+        correct_top_player_names = ["Gretzky", "Lemieux", "Yzerman", "Kurri", "Semenko"]
+        top_players = self.statistics.top(4, SortBy.POINTS)
+        for i in range(5):
+            self.assertEqual(top_players[i].name, correct_top_player_names[i])
+
+    def test_top_sort_by_goals(self):
+        correct_top_player_names = ["Lemieux", "Yzerman", "Kurri", "Gretzky", "Semenko"]
+        top_players = self.statistics.top(4, SortBy.GOALS)
+        for i in range(5):
+            self.assertEqual(top_players[i].name, correct_top_player_names[i])
+
+    def test_top_sort_by_assists(self):
+        correct_top_player_names = ["Gretzky", "Yzerman", "Lemieux", "Kurri", "Semenko"]
+        top_players = self.statistics.top(4, SortBy.ASSISTS)
+        for i in range(5):
+            print(top_players[i].name)
+            self.assertEqual(top_players[i].name, correct_top_player_names[i])
+
+
 

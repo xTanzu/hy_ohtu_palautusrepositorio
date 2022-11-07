@@ -1,13 +1,16 @@
-# from player_reader import PlayerReader
-
+from enums.sort_by import SortBy
 
 def sort_by_points(player):
     return player.points
 
+def sort_by_goals(player):
+    return player.goals
+
+def sort_by_assists(player):
+    return player.assists
 
 class Statistics:
     def __init__(self, reader_obj):
-        # reader = PlayerReader()
         reader = reader_obj 
 
         self._players = reader.get_players()
@@ -27,12 +30,25 @@ class Statistics:
 
         return list(players_of_team)
 
-    def top(self, how_many):
-        sorted_players = sorted(
-            self._players,
-            reverse=True,
-            key=sort_by_points
-        )
+    def top(self, how_many, sort_method=SortBy.POINTS):
+        if sort_method == SortBy.GOALS:
+            sorted_players = sorted(
+                self._players,
+                reverse=True,
+                key=sort_by_goals
+            )
+        elif sort_method == SortBy.ASSISTS:
+            sorted_players = sorted(
+                self._players,
+                reverse=True,
+                key=sort_by_assists
+            )
+        else:                                   # sort_method == SortBy.POINTS:
+            sorted_players = sorted(
+                    self._players,
+                    reverse=True,
+                    key=sort_by_points
+                    )
 
         result = []
         i = 0
