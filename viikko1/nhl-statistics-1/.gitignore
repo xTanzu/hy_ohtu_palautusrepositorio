@@ -6,3 +6,6 @@ htmlcov
 __pycache__
 *.py[cod]
 *$py.class
+tags
+*.swp
+*.sop
