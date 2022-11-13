@@ -14,24 +14,16 @@ Varasto	src/varasto.py	/^class Varasto:$/;"	c
 Viitegeneraattori	src/viitegeneraattori.py	/^class Viitegeneraattori:$/;"	c
 __eq__	src/tuote.py	/^    def __eq__(self, other):$/;"	m	class:Tuote
 __hash__	src/tuote.py	/^    def __hash__(self):$/;"	m	class:Tuote
-__init__	src/kauppa.py	/^    def __init__(self):$/;"	m	class:Kauppa
+__init__	src/kauppa.py	/^    def __init__(self, varasto, pankki, viitegen):$/;"	m	class:Kauppa
 __init__	src/kirjanpito.py	/^    def __init__(self):$/;"	m	class:Kirjanpito
 __init__	src/ostoskori.py	/^    def __init__(self):$/;"	m	class:Ostoskori
-__init__	src/pankki.py	/^    def __init__(self):$/;"	m	class:Pankki
+__init__	src/pankki.py	/^    def __init__(self, kirjanpito=the_kirjanpito_olio):$/;"	m	class:Pankki
 __init__	src/tuote.py	/^    def __init__(self, id, nimi, hinta):$/;"	m	class:Tuote
-__init__	src/varasto.py	/^    def __init__(self):$/;"	m	class:Varasto
+__init__	src/varasto.py	/^    def __init__(self, kirjanpito=the_kirjanpito_olio):$/;"	m	class:Varasto
 __init__	src/viitegeneraattori.py	/^    def __init__(self):$/;"	m	class:Viitegeneraattori
-__instanssi	src/kirjanpito.py	/^    __instanssi = None$/;"	v	class:Kirjanpito	file:
-__instanssi	src/pankki.py	/^    __instanssi = None$/;"	v	class:Pankki	file:
-__instanssi	src/varasto.py	/^    __instanssi = None$/;"	v	class:Varasto	file:
-__instanssi	src/viitegeneraattori.py	/^    __instanssi = None$/;"	v	class:Viitegeneraattori	file:
 __str__	src/tuote.py	/^    def __str__(self):$/;"	m	class:Tuote
 _alusta_tuotteet	src/varasto.py	/^    def _alusta_tuotteet(self):$/;"	m	class:Varasto
 aloita_asiointi	src/kauppa.py	/^    def aloita_asiointi(self):$/;"	m	class:Kauppa
-get_instance	src/kirjanpito.py	/^    def get_instance():$/;"	m	class:Kirjanpito
-get_instance	src/pankki.py	/^    def get_instance():$/;"	m	class:Pankki
-get_instance	src/varasto.py	/^    def get_instance():$/;"	m	class:Varasto
-get_instance	src/viitegeneraattori.py	/^    def get_instance():$/;"	m	class:Viitegeneraattori
 hae_tuote	src/varasto.py	/^    def hae_tuote(self, id):$/;"	m	class:Varasto
 hinta	src/ostoskori.py	/^    def hinta(self):$/;"	m	class:Ostoskori
 lisaa	src/ostoskori.py	/^    def lisaa(self, tuote):$/;"	m	class:Ostoskori
@@ -43,6 +35,10 @@ palauta_varastoon	src/varasto.py	/^    def palauta_varastoon(self, tuote):$/;"	m
 poista	src/ostoskori.py	/^    def poista(self, tuote):$/;"	m	class:Ostoskori
 poista_korista	src/kauppa.py	/^    def poista_korista(self, id):$/;"	m	class:Kauppa
 saldo	src/varasto.py	/^    def saldo(self, id):$/;"	m	class:Varasto
+the_kirjanpito_olio	src/kirjanpito.py	/^the_kirjanpito_olio = Kirjanpito()$/;"	v
+the_pankki_olio	src/pankki.py	/^the_pankki_olio = Pankki()$/;"	v
+the_varasto_olio	src/varasto.py	/^the_varasto_olio = Varasto()$/;"	v
+the_viitegenaraattori_olio	src/viitegeneraattori.py	/^the_viitegenaraattori_olio = Viitegeneraattori()$/;"	v
 tilimaksu	src/kauppa.py	/^    def tilimaksu(self, nimi, tili_numero):$/;"	m	class:Kauppa
 tilisiirto	src/pankki.py	/^    def tilisiirto(self, nimi, viitenumero, tililta, tilille, summa):$/;"	m	class:Pankki
 uusi	src/viitegeneraattori.py	/^    def uusi(self):$/;"	m	class:Viitegeneraattori
