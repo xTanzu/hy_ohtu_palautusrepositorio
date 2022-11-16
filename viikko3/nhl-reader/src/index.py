@@ -10,15 +10,13 @@ for player_json in response_json:
     name = player_json['name']
     nationality = player_json['nationality']
     team = player_json['team']
-    stats = {}
-    stats['assists'] = player_json['assists']
-    stats['goals'] = player_json['goals']
-    stats['penalties'] = player_json['penalties']
-    stats['games'] = player_json['games']
-    player = Player(name, nationality, team, stats)
+    assists = player_json['assists']
+    goals = player_json['goals']
+    penalties = player_json['penalties']
+    games = player_json['games']
+    player = Player(name, nationality, team, assists, goals, penalties, games)
     players.append(player)
 
-for player in sorted(players):
+for player in sorted(players, key=lambda player: player.points(), reverse=True):
     if player.nationality == "FIN":
         print(repr(player))
-
