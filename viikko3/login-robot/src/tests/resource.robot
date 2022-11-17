@@ -10,3 +10,8 @@ Input Credentials
     Input  ${username}
     Input  ${password}
     Run Application
+
+Register With Credentials
+    [Arguments]  ${username}  ${password}
+    Input  new
+    Input Credentials  ${username}  ${password}
