@@ -16,7 +16,7 @@ class Player:
         return self.name > other.name
     
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.nationality})"
 
     def __repr__(self):
         return (f"{self.name : <25}{self.team : <4}{self.stats['goals'] : >3}  "
