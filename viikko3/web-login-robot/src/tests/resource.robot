@@ -4,11 +4,12 @@ Library  ../AppLibrary.py
 
 *** Variables ***
 ${SERVER}  localhost:5000
-${BROWSER}  chrome
-${DELAY}  0.1 seconds
+${BROWSER}  headlesschrome
+${DELAY}  0 seconds
 ${HOME URL}  http://${SERVER}
 ${LOGIN URL}  http://${SERVER}/login
 ${REGISTER URL}  http://${SERVER}/register
+${RESET URL}  http://${SERVER}/tests/reset
 
 *** Keywords ***
 Open And Configure Browser
@@ -30,3 +31,10 @@ Go To Login Page
 
 Go To Home Page
     Go To  ${HOME URL}
+
+Reset And Go To Register Page
+    Reset Application
+    Go To  ${REGISTER URL}
+
+#Reset Application
+#    reset_application
