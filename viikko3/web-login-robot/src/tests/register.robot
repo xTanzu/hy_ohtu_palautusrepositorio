@@ -1,7 +1,8 @@
 *** Settings ***
 Resource  resource.robot
+Resource  login_resource.robot
 Suite Setup  Open And Configure Browser
-Suite Teardown Close Browser
+Suite Teardown  Close Browser
 Test Setup  Reset And Go To Register Page
 #Test Teardown  Reset Application
 
@@ -12,57 +13,75 @@ ${PASSWORD_CONFIRMATION_FAIL_MESSAGE}  Password does not match confirmation
 
 *** Test Cases ***
 Register With Valid Username And Password
-    Set Username  kalle
-    Set Password  kalle123
-    Set Password Confirmation  kalle123
-    Submit Register Info
-    Register Should Succeed
+    Set Registration Info  kalle  kalle123  kalle123
+    Submit Registration Info
+    Registration Should Succeed
 
 Register With Too Short Username And Valid Password
-    Set Username  ka
-    Set Password  kalle123
-    Set Password Confirmation  kalle123
-    Submit Register Info
-    Register Should Fail On Username
+    Set Registration Info  ka  kalle123  kalle123
+    Submit Registration Info
+    Registration Should Fail On Username
 
 Register With Valid Username And Too Short Password
-    Set Username  kalle
-    Set Password  kalle
-    Set Password Confirmation  kalle
-    Submit Register Info
-    Register Should Fail On Password
+    Set Registration Info  kalle  kalle  kalle
+    Submit Registration Info
+    Registration Should Fail On Password
 
 Register With Nonmatching Password And Password Confirmation
-    Set Username  kalle
-    Set Password  kalle123
-    Set Password Confirmation  kalle
-    Submit Register Info
-    Register Should Fail On Password Confirmation
+    Set Registration Info  kalle  kalle123  kalle
+    Submit Registration Info
+    Registration Should Fail On Password Confirmation
+
+Login After Successful Registration
+    Set Registration Info  kalle  kalle123  kalle123
+    Submit Registration Info
+    Registration Should Succeed
+    Go To Login Page
+    Login Page Should Be Open
+    Set Login Credentials  kalle  kalle123
+    Submit Login Credentials
+    Login Should Succeed
+
+Login After Failed Registration
+    Set Registration Info  kalle  kalle  kalle
+    Submit Registration Info
+    Registration Should Fail On Password
+    Go To Login Page
+    Login Page Should Be Open
+    Set Login Credentials  kalle  kalle
+    Submit Login Credentials
+    Login Should Fail With Message  Invalid username or password
 
 *** Keywords ***
-Set Username
+Set Registration Info
+    [Arguments]  ${username}  ${password}  ${password_confirmation}
+    Set Registration Username  ${username}
+    Set Registration Password  ${password}
+    Set Registration Password Confirmation  ${password_confirmation}
+
+Set Registration Username
     [Arguments]  ${username}
     Input Text  username  ${username}
 
-Set Password
+Set Registration Password
     [Arguments]  ${password}
     Input Password  password  ${password}
 
-Set Password Confirmation
+Set Registration Password Confirmation
     [Arguments]  ${password_confimation}
     Input Password  password_confirmation  ${password_confimation}
 
-Submit Register Info
+Submit Registration Info
     Click Button  Register
 
-Register Should Succeed
+Registration Should Succeed
     Title Should Be  Welcome to Ohtu Application!
 
-Register Should Fail On Username
+Registration Should Fail On Username
     Page Should Contain  ${USERNAME_FAIL_MESSAGE}
 
-Register Should Fail On Password
+Registration Should Fail On Password
     Page Should Contain  ${PASSWORD_FAIL_MESSAGE}
 
-Register Should Fail On Password Confirmation
+Registration Should Fail On Password Confirmation
     Page Should Contain  ${PASSWORD_CONFIRMATION_FAIL_MESSAGE}
