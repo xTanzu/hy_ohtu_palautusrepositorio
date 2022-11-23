@@ -9,6 +9,8 @@ class Ostoskori:
         return len(self.tuotteet)
 
     def hinta(self):
+        if len(self.tuotteet) > 0:
+            return self.tuotteet[0].hinta()
         return 0
 
     def lisaa_tuote(self, lisattava: Tuote):
