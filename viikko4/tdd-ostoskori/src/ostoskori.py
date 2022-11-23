@@ -3,19 +3,19 @@ from ostos import Ostos
 
 class Ostoskori:
     def __init__(self):
-        self.ostokset = {}
+        self._ostokset = {}
 
     def tavaroita_korissa(self):
-        return sum([ostos.lukumaara() for ostos in self.ostokset.values()])
+        return sum([ostos.lukumaara() for ostos in self.ostokset()])
 
     def hinta(self):
-        return sum([ostos.hinta() for ostos in self.ostokset.values()])
+        return sum([ostos.hinta() for ostos in self.ostokset()])
 
     def lisaa_tuote(self, lisattava: Tuote):
-        if lisattava.nimi not in self.ostokset.keys():
-            self.ostokset[lisattava.nimi] = Ostos(lisattava)
+        if lisattava.nimi not in self._ostokset.keys():
+            self._ostokset[lisattava.nimi] = Ostos(lisattava)
         else:
-            self.ostokset[lisattava.nimi].muuta_lukumaaraa(1)
+            self._ostokset[lisattava.nimi].muuta_lukumaaraa(1)
 
     def poista_tuote(self, poistettava: Tuote):
         # poistaa tuotteen
@@ -26,6 +26,4 @@ class Ostoskori:
         # tyhjentää ostoskorin
 
     def ostokset(self):
-        pass
-        # palauttaa listan jossa on korissa olevat ostos-oliot
-        # kukin ostos-olio siis kertoo mistä tuotteesta on kyse JA kuinka monta kappaletta kyseistä tuotetta korissa on
+        return list(self._ostokset.values())
