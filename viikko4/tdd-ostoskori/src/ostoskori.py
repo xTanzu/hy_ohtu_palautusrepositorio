@@ -25,8 +25,7 @@ class Ostoskori:
                 self._ostokset.pop(poistettava.nimi)
 
     def tyhjenna(self):
-        pass
-        # tyhjentää ostoskorin
+        self._ostokset.clear()
 
     def ostokset(self):
         return list(self._ostokset.values())
