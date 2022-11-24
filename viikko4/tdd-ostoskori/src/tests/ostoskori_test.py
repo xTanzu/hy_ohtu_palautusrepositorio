@@ -99,3 +99,12 @@ class TestOstoskori(unittest.TestCase):
         ostos = self.kori.ostokset()[0]
         self.assertEqual(ostos.tuotteen_nimi(), "Kauramaito")
         self.assertEqual(ostos.lukumaara(), 2)
+
+    # step 13
+    def test_jos_korissa_kaksi_samaa_tuotetta_ja_toinen_poistetaan_jaa_yksi_tuote_jaljelle(self):
+        kauramaito = Tuote("Kauramaito", 4)
+        self.kori.lisaa_tuote(kauramaito)
+        self.kori.lisaa_tuote(kauramaito)
+        self.kori.poista_tuote(kauramaito)
+        ostos = self.kori.ostokset()[0]
+        self.assertEqual(ostos.lukumaara(), 1)

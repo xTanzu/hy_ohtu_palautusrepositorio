@@ -18,8 +18,11 @@ class Ostoskori:
             self._ostokset[lisattava.nimi].muuta_lukumaaraa(1)
 
     def poista_tuote(self, poistettava: Tuote):
-        # poistaa tuotteen
-        pass
+        if poistettava.nimi in self._ostokset.keys():
+            poisto_ostos =  self._ostokset[poistettava.nimi]
+            poisto_ostos.muuta_lukumaaraa(-1)
+            # if poisto_ostos.lukumaara() == 0:
+            #     self._ostokset.pop(poistettava.nimi)
 
     def tyhjenna(self):
         pass
