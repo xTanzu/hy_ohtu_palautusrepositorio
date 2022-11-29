@@ -15,17 +15,18 @@ class TennisGame:
         score = ""
         temp_score = 0
 
+        def getTiedScore():
+            possible_scores = {
+                        0: "Love-All",
+                        1: "Fifteen-All",
+                        2: "Thirty-All",
+                        3: "Forty-All",
+                    }
+            return possible_scores.get(self.m_score1, "Deuce")
+
         if self.m_score1 == self.m_score2:
-            if self.m_score1 == 0:
-                score = "Love-All"
-            elif self.m_score1 == 1:
-                score = "Fifteen-All"
-            elif self.m_score1 == 2:
-                score = "Thirty-All"
-            elif self.m_score1 == 3:
-                score = "Forty-All"
-            else:
-                score = "Deuce"
+            score = getTiedScore()
+
         elif self.m_score1 >= 4 or self.m_score2 >= 4:
             minus_result = self.m_score1 - self. m_score2
 
