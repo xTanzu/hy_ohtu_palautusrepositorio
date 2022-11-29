@@ -30,25 +30,20 @@ class TennisGame:
             player = "player1" if difference > 0 else "player2"
             return outcome + player
 
+        def getGameScore():
+            possible_scores = {
+                        0: "Love",
+                        1: "Fifteen",
+                        2: "Thirty",
+                        3: "Forty",
+                    }
+            return f"{possible_scores[self.m_score1]}-{possible_scores[self.m_score2]}"
+
         if self.m_score1 == self.m_score2:
             score = getTiedScore()
         elif max(self.m_score1, self.m_score2) >= 4:
             score = getBrakePointScore()
         else:
-            for i in range(1, 3):
-                if i == 1:
-                    temp_score = self.m_score1
-                else:
-                    score = score + "-"
-                    temp_score = self.m_score2
-
-                if temp_score == 0:
-                    score = score + "Love"
-                elif temp_score == 1:
-                    score = score + "Fifteen"
-                elif temp_score == 2:
-                    score = score + "Thirty"
-                elif temp_score == 3:
-                    score = score + "Forty"
+            score = getGameScore()
 
         return score
