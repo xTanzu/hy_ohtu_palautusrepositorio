@@ -13,19 +13,27 @@ class Io:
     def __init__(self, input_field, output_field):
         self.input = input_field
         self.output = output_field
+        self.ulos_loki = ["0"]
 
     def lue(self):
         return self.input.get()
 
     def kirjoita(self, viesti):
-        self.output.set(str(viesti))
+        viesti = str(viesti)
+        self.ulos_loki.append(viesti)
+        self.output.set(viesti)
 
     def tyhjennaSyote(self):
         self.input.delete(0, constants.END)
 
+    def pakita(self):
+        if len(self.ulos_loki) > 1:
+            self.ulos_loki.pop()
+        return self.ulos_loki.pop()
+
 
 class Laskutoimitus:
-    def __init__(self, sovelluslogiikka,io):
+    def __init__(self, sovelluslogiikka, io):
         self.sovelluslogiikka = sovelluslogiikka
         self._io = io
 
@@ -52,6 +60,14 @@ class Nollaus(Laskutoimitus):
     def suorita(self):
         self.sovelluslogiikka.nollaa()
 
+class Kumoa(Laskutoimitus):
+    def __init__(self, *args):
+        super().__init__(*args)
+
+    def suorita(self):
+        edellinen_arvo = int(self._io.pakita())
+        self.sovelluslogiikka.aseta_arvo(edellinen_arvo)
+
 
 class Kayttoliittyma:
     def __init__(self, sovellus, root):
@@ -67,7 +83,8 @@ class Kayttoliittyma:
         self.komennot = {
                 Komento.SUMMA: Summa(self._sovellus, self._io),
                 Komento.EROTUS: Erotus(self._sovellus, self._io),
-                Komento.NOLLAUS: Nollaus(self._sovellus, self._io)
+                Komento.NOLLAUS: Nollaus(self._sovellus, self._io),
+                Komento.KUMOA: Kumoa(self._sovellus, self._io)
                 }
 
         tulos_teksti = ttk.Label(textvariable=self._tulos_var)
