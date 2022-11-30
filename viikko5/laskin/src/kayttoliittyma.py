@@ -9,6 +9,26 @@ class Komento(Enum):
     KUMOA = 4
 
 
+class Io:
+    def __init__(self, input_field, output_field):
+        self.input = input_field
+        self.output = output_field
+
+    def lue(self):
+        return self.input.get()
+
+    def kirjoita(self, viesti):
+        self.output.set(str(viesti))
+
+    def tyhjennaSyote(self):
+        self.input.delete(0, constants.END)
+
+
+class Komentotehdas:
+    def __init__(self, io):
+        self.io = io
+
+
 class Kayttoliittyma:
     def __init__(self, sovellus, root):
         self._sovellus = sovellus
@@ -18,6 +38,7 @@ class Kayttoliittyma:
         self._tulos_var = StringVar()
         self._tulos_var.set(self._sovellus.tulos)
         self._syote_kentta = ttk.Entry(master=self._root)
+        self.io = Io(self._syote_kentta, self._tulos_var)
 
         tulos_teksti = ttk.Label(textvariable=self._tulos_var)
 
@@ -58,7 +79,7 @@ class Kayttoliittyma:
         arvo = 0
 
         try:
-            arvo = int(self._syote_kentta.get())
+            arvo = int(self.io.lue())#int(self._syote_kentta.get())
         except Exception:
             pass
 
@@ -78,5 +99,7 @@ class Kayttoliittyma:
         else:
             self._nollaus_painike["state"] = constants.NORMAL
 
-        self._syote_kentta.delete(0, constants.END)
-        self._tulos_var.set(self._sovellus.tulos)
+        # self._syote_kentta.delete(0, constants.END)
+        # self._tulos_var.set(self._sovellus.tulos)
+        self.io.tyhjennaSyote()
+        self.io.kirjoita(self._sovellus.tulos)
