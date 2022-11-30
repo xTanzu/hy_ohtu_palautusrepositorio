@@ -24,9 +24,33 @@ class Io:
         self.input.delete(0, constants.END)
 
 
-class Komentotehdas:
-    def __init__(self, io):
-        self.io = io
+class Laskutoimitus:
+    def __init__(self, sovelluslogiikka,io):
+        self.sovelluslogiikka = sovelluslogiikka
+        self._io = io
+
+class Summa(Laskutoimitus):
+    def __init__(self, *args):
+        super().__init__(*args)
+
+    def suorita(self):
+        luku = int(self._io.lue())
+        self.sovelluslogiikka.plus(luku)
+
+class Erotus(Laskutoimitus):
+    def __init__(self, *args):
+        super().__init__(*args)
+
+    def suorita(self):
+        luku = int(self._io.lue())
+        self.sovelluslogiikka.miinus(luku)
+
+class Nollaus(Laskutoimitus):
+    def __init__(self, *args):
+        super().__init__(*args)
+
+    def suorita(self):
+        self.sovelluslogiikka.nollaa()
 
 
 class Kayttoliittyma:
@@ -38,7 +62,13 @@ class Kayttoliittyma:
         self._tulos_var = StringVar()
         self._tulos_var.set(self._sovellus.tulos)
         self._syote_kentta = ttk.Entry(master=self._root)
-        self.io = Io(self._syote_kentta, self._tulos_var)
+        self._io = Io(self._syote_kentta, self._tulos_var)
+
+        self.komennot = {
+                Komento.SUMMA: Summa(self._sovellus, self._io),
+                Komento.EROTUS: Erotus(self._sovellus, self._io),
+                Komento.NOLLAUS: Nollaus(self._sovellus, self._io)
+                }
 
         tulos_teksti = ttk.Label(textvariable=self._tulos_var)
 
@@ -76,21 +106,14 @@ class Kayttoliittyma:
         self._kumoa_painike.grid(row=2, column=3)
 
     def _suorita_komento(self, komento):
-        arvo = 0
-
-        try:
-            arvo = int(self.io.lue())#int(self._syote_kentta.get())
-        except Exception:
-            pass
-
-        if komento == Komento.SUMMA:
-            self._sovellus.plus(arvo)
-        elif komento == Komento.EROTUS:
-            self._sovellus.miinus(arvo)
-        elif komento == Komento.NOLLAUS:
-            self._sovellus.nollaa()
-        elif komento == Komento.KUMOA:
-            pass
+        komento_olio = self.komennot.get(komento, None)
+        if komento_olio:
+            try:
+                komento_olio.suorita()
+            except Exception:
+                print("Command not able to run")
+        else:
+            raise ValueError(f"Unknown command: {komento}")
 
         self._kumoa_painike["state"] = constants.NORMAL
 
@@ -99,7 +122,5 @@ class Kayttoliittyma:
         else:
             self._nollaus_painike["state"] = constants.NORMAL
 
-        # self._syote_kentta.delete(0, constants.END)
-        # self._tulos_var.set(self._sovellus.tulos)
-        self.io.tyhjennaSyote()
-        self.io.kirjoita(self._sovellus.tulos)
+        self._io.tyhjennaSyote()
+        self._io.kirjoita(self._sovellus.tulos)
