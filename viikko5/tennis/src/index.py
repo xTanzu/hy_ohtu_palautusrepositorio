@@ -2,23 +2,23 @@ from tennis_game import TennisGame
 
 
 def main():
-    game = TennisGame("player1", "player2")
+    game = TennisGame("Federer", "Williams")
 
     print(game.get_score())
 
-    game.won_point("player1")
+    game.won_point("Federer")
     print(game.get_score())
 
-    game.won_point("player1")
+    game.won_point("Federer")
     print(game.get_score())
 
-    game.won_point("player2")
+    game.won_point("Williams")
     print(game.get_score())
 
-    game.won_point("player1")
+    game.won_point("Federer")
     print(game.get_score())
 
-    game.won_point("player1")
+    game.won_point("Federer")
     print(game.get_score())
 
 
