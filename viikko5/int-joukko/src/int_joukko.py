@@ -5,17 +5,10 @@ class IntJoukko:
         self.lukujono = [None] * self.kapasiteetti
         self.alkioiden_lkm = 0
 
-    def kuuluu(self, n):
-        on = 0
-
-        for i in range(0, self.alkioiden_lkm):
-            if n == self.lukujono[i]:
-                on = on + 1
-
-        if on > 0:
+    def kuuluu(self, luku):
+        if self.luvun_lisays_paikka_binaarihaulla(luku) is None:
             return True
-        else:
-            return False
+        return False
 
     def lisaa(self, lisattava):
 
@@ -26,22 +19,6 @@ class IntJoukko:
                 uusiLukujono[i] = self.lukujono[i]
             self.lukujono = uusiLukujono
 
-        def hae_lisays_paikka_binaarihaulla():
-            ala = 0
-            yla = self.alkioiden_lkm
-            indx = None
-            while True:
-                if ala == yla:
-                    return ala
-                indx = ala + ((yla - ala) // 2)
-                luku = self.lukujono[indx]
-                if luku == lisattava:
-                    return None
-                elif lisattava < luku:
-                    yla = indx
-                else:
-                    ala = indx + 1
-
         def sijoita_lisattava_paikalleen():
             for i in reversed(range(paikka, self.alkioiden_lkm)):
                 self.lukujono[i+1] = self.lukujono[i]
@@ -50,11 +27,27 @@ class IntJoukko:
 
         if self.alkioiden_lkm == self.kapasiteetti:
             kasvata_lukujonoa()
-        paikka = hae_lisays_paikka_binaarihaulla()
+        paikka = self.luvun_lisays_paikka_binaarihaulla(lisattava)
         if paikka is None:
             return False
         sijoita_lisattava_paikalleen()
         return True
+
+    def luvun_lisays_paikka_binaarihaulla(self, luku):
+        ala = 0
+        yla = self.alkioiden_lkm
+        indx = None
+        while True:
+            if ala == yla:
+                return ala
+            indx = ala + ((yla - ala) // 2)
+            luku_indx = self.lukujono[indx]
+            if luku_indx == luku:
+                return None
+            elif luku < luku_indx:
+                yla = indx
+            else:
+                ala = indx + 1
 
     def poista(self, n):
         kohta = -1
