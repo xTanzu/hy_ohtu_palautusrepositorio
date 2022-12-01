@@ -75,17 +75,17 @@ class IntJoukko:
 
     @staticmethod
     def yhdiste(a, b):
-        x = IntJoukko()
+        yhdiste_joukko = IntJoukko()
         a_taulu = a.to_int_list()
         b_taulu = b.to_int_list()
 
-        for i in range(0, len(a_taulu)):
-            x.lisaa(a_taulu[i])
+        for luku in a_taulu:
+            yhdiste_joukko.lisaa(luku)
 
-        for i in range(0, len(b_taulu)):
-            x.lisaa(b_taulu[i])
+        for luku in b_taulu:
+            yhdiste_joukko.lisaa(luku)
 
-        return x
+        return yhdiste_joukko
 
     @staticmethod
     def leikkaus(a, b):
