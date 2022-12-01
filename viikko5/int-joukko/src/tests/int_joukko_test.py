@@ -68,7 +68,7 @@ class TestIntJoukko(unittest.TestCase):
         self.toimii_kasvatuksen_jalkeen(joukko_c)
 
     def test_merkkijonoesitys_toimii(self):
-        self.assertEqual(str(self.joukko), "{10, 3}")
+        self.assertEqual(str(self.joukko), "{3, 10}")
 
     def test_merkkijonoesitys_toimii_yhden_kokeisella_joukolla(self):
         joukko = IntJoukko()
