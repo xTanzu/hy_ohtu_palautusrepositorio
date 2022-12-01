@@ -89,50 +89,42 @@ class IntJoukko:
 
     @staticmethod
     def leikkaus(a, b):
-        leikkaus_joukko = IntJoukko()
         a_taulu = a.to_int_list()
         b_taulu = b.to_int_list()
+        return IntJoukko.kilpailu_valinta(a_taulu, b_taulu, "leikkaus")
+
+    @staticmethod
+    def erotus(a, b):
+        a_taulu = a.to_int_list()
+        b_taulu = b.to_int_list()
+        return IntJoukko.kilpailu_valinta(a_taulu, b_taulu, "erotus")
+
+    @staticmethod
+    def kilpailu_valinta(a_taulu, b_taulu, valinta_strategia):
+        joukko = IntJoukko()
         a_indx = b_indx = 0
 
         while a_indx < len(a_taulu) and b_indx < len(b_taulu):
             a_val = a_taulu[a_indx]
             b_val = b_taulu[b_indx]
             if a_val == b_val:
-                leikkaus_joukko.lisaa(a_val)
+                if valinta_strategia == "leikkaus":
+                    joukko.lisaa(a_val)
                 a_indx += 1
                 b_indx += 1
                 continue
             if a_val < b_val:
+                if valinta_strategia == "erotus":
+                    joukko.lisaa(a_val)
                 a_indx += 1
             else:
                 b_indx += 1
 
-        return leikkaus_joukko
+        if valinta_strategia == "erotus" and a_indx < len(a_taulu) and b_indx == len(b_taulu):
+            for luku in a_taulu[a_indx:]:
+                joukko.lisaa(luku)
 
-    @staticmethod
-    def erotus(a, b):
-        z = IntJoukko()
-        a_taulu = a.to_int_list()
-        b_taulu = b.to_int_list()
-
-        for i in range(0, len(a_taulu)):
-            z.lisaa(a_taulu[i])
-
-        for i in range(0, len(b_taulu)):
-            z.poista(b_taulu[i])
-
-        return z
+        return joukko
 
     def __str__(self):
-        if self.alkioiden_lkm == 0:
-            return "{}"
-        elif self.alkioiden_lkm == 1:
-            return "{" + str(self.lukujono[0]) + "}"
-        else:
-            tuotos = "{"
-            for i in range(0, self.alkioiden_lkm - 1):
-                tuotos = tuotos + str(self.lukujono[i])
-                tuotos = tuotos + ", "
-            tuotos = tuotos + str(self.lukujono[self.alkioiden_lkm - 1])
-            tuotos = tuotos + "}"
-            return tuotos
+        return "{" + ", ".join(map(str, self.to_int_list())) + "}"
