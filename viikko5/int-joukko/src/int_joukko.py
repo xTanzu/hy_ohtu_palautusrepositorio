@@ -89,16 +89,25 @@ class IntJoukko:
 
     @staticmethod
     def leikkaus(a, b):
-        y = IntJoukko()
+        leikkaus_joukko = IntJoukko()
         a_taulu = a.to_int_list()
         b_taulu = b.to_int_list()
+        a_indx = b_indx = 0
 
-        for i in range(0, len(a_taulu)):
-            for j in range(0, len(b_taulu)):
-                if a_taulu[i] == b_taulu[j]:
-                    y.lisaa(b_taulu[j])
+        while a_indx < len(a_taulu) and b_indx < len(b_taulu):
+            a_val = a_taulu[a_indx]
+            b_val = b_taulu[b_indx]
+            if a_val == b_val:
+                leikkaus_joukko.lisaa(a_val)
+                a_indx += 1
+                b_indx += 1
+                continue
+            if a_val < b_val:
+                a_indx += 1
+            else:
+                b_indx += 1
 
-        return y
+        return leikkaus_joukko
 
     @staticmethod
     def erotus(a, b):
