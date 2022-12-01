@@ -6,31 +6,29 @@ class IntJoukko:
         self.alkioiden_lkm = 0
 
     def kuuluu(self, luku):
-        if self.luvun_lisays_paikka_binaarihaulla(luku) is None:
-            return True
-        return False
+        lisays_paikka_olemassa, paikka = self.luvun_lisays_paikka_binaarihaulla(luku)
+        return not lisays_paikka_olemassa
 
     def lisaa(self, lisattava):
 
         def kasvata_lukujonoa():
             self.kapasiteetti += self.kasvatuskoko
             uusiLukujono = [None] * self.kapasiteetti
-            for i in range(0, self.alkioiden_lkm):
-                uusiLukujono[i] = self.lukujono[i]
+            self.kopioi_taulukko(self.lukujono, uusiLukujono, self.alkioiden_lkm)
             self.lukujono = uusiLukujono
 
-        def sijoita_lisattava_paikalleen():
-            for i in reversed(range(paikka, self.alkioiden_lkm)):
+        def sijoita_ja_jarjesta():
+            for i in reversed(range(lisays_paikka, self.alkioiden_lkm)):
                 self.lukujono[i+1] = self.lukujono[i]
-            self.lukujono[paikka] = lisattava
+            self.lukujono[lisays_paikka] = lisattava
             self.alkioiden_lkm += 1
 
         if self.alkioiden_lkm == self.kapasiteetti:
             kasvata_lukujonoa()
-        paikka = self.luvun_lisays_paikka_binaarihaulla(lisattava)
-        if paikka is None:
+        olemassa, lisays_paikka = self.luvun_lisays_paikka_binaarihaulla(lisattava)
+        if olemassa is False:
             return False
-        sijoita_lisattava_paikalleen()
+        sijoita_ja_jarjesta()
         return True
 
     def luvun_lisays_paikka_binaarihaulla(self, luku):
@@ -39,50 +37,40 @@ class IntJoukko:
         indx = None
         while True:
             if ala == yla:
-                return ala
+                return True, ala
             indx = ala + ((yla - ala) // 2)
             luku_indx = self.lukujono[indx]
             if luku_indx == luku:
-                return None
+                return False, indx
             elif luku < luku_indx:
                 yla = indx
             else:
                 ala = indx + 1
 
-    def poista(self, n):
-        kohta = -1
-        apu = 0
+    def poista(self, poistettava):
 
-        for i in range(0, self.alkioiden_lkm):
-            if n == self.lukujono[i]:
-                kohta = i  # siis luku löytyy tuosta kohdasta :D
-                self.lukujono[kohta] = 0
-                break
+        def poista_ja_jarjesta():
+            self.alkioiden_lkm -= 1
+            for i in range(paikka, self.alkioiden_lkm):
+                self.lukujono[i] = self.lukujono[i+1]
+            self.lukujono[self.alkioiden_lkm] = None
 
-        if kohta != -1:
-            for j in range(kohta, self.alkioiden_lkm - 1):
-                apu = self.lukujono[j]
-                self.lukujono[j] = self.lukujono[j + 1]
-                self.lukujono[j + 1] = apu
+        lisays_paikka_olemassa, paikka = self.luvun_lisays_paikka_binaarihaulla(poistettava)
+        if lisays_paikka_olemassa:
+            return False
+        poista_ja_jarjesta()
+        return True
 
-            self.alkioiden_lkm = self.alkioiden_lkm - 1
-            return True
-
-        return False
-
-    def kopioi_taulukko(self, a, b):
-        for i in range(0, len(a)):
-            b[i] = a[i]
+    def kopioi_taulukko(self, lahde, kohde, pituus):
+        for i in range(0, pituus):
+            kohde[i] = lahde[i]
 
     def mahtavuus(self):
         return self.alkioiden_lkm
 
     def to_int_list(self):
-        taulu = [0] * self.alkioiden_lkm
-
-        for i in range(0, len(taulu)):
-            taulu[i] = self.lukujono[i]
-
+        taulu = [None] * self.alkioiden_lkm
+        self.kopioi_taulukko(self.lukujono, taulu, self.alkioiden_lkm)
         return taulu
 
     @staticmethod
