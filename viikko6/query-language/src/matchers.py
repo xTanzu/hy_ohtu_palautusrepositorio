@@ -11,6 +11,9 @@ class QueryBuilder:
     def hasFewerThan(self, value, attr):
         return QueryBuilder(And(self.query, HasFewerThan(value, attr)))
 
+    def oneOf(self, *queries):
+        return QueryBuilder(Or(*queries))
+
     def build(self):
         return self.query
 
@@ -34,6 +37,7 @@ class Or:
         for matcher in self._matchers:
             if matcher.test(player):
                 return True
+
         return False
 
 class PlaysIn:

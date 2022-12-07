@@ -34,7 +34,6 @@ class Statistics:
         return sorted_players[:how_many]
 
     def matches(self, matcher):
-        print(matcher)
         matching_players = filter(
             lambda player: matcher.test(player),
             self._players
